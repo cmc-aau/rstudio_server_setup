@@ -1,0 +1,48 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - oefenweb.latest_r
+    - oefenweb.rstudio_server
+  tasks:
+    - name: "Create a group for RStudio users"
+      group:
+        name: "{{ rstudio_users_group }}"
+        state: present
+    
+    - name: "Add users for RStudio"
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+        groups: "{{ rstudio_users_group }}"
+        append: true
+        comment: "User created for RStudio server"
+        create_home: true
+        generate_ssh_key: true
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+      with_items: "{{ rstudio_users }}"
+
+  vars:
+    r_version: "40"
+    r_cran_mirror: "https://mirrors.dotsrc.org/cran/" #AAU CRAN mirror
+    r_install_dev: true
+    r_install: r-recommended
+    rstudio_server_version: 1.4.1717
+    rstudio_users:
+      - username
+      #- user2
+      #- user3
+    rstudio_users_group: rstudio_users
+    rstudio_server_auth_required_user_group: "{{ rstudio_users_group }}"
+    rstudio_server_install: 
+      - libcurl4-openssl-dev
+      - libssl-dev
+      - libxml2-dev
+      - libxt-dev
+      - libcairo2-dev
+      - libharfbuzz-dev
+      - libfribidi-dev
+      - libtiff5-dev
+      - pandoc
