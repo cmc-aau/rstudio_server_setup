@@ -15,7 +15,7 @@ setup_ansible_venv() {
         pkgs="software-properties-common python3-venv"
         if ! dpkg -s $pkgs >/dev/null 2>&1
         then
-            message "One or more system packages are not installed, installing"
+            message "One or more required system packages are not installed, installing"
             sudo apt-get update -qqy
             sudo apt-get install -y $pkgs
         else
@@ -26,7 +26,7 @@ setup_ansible_venv() {
         . "${ansible_venv}/bin/activate"
         #wheel must be installed first, can't be done in the same command
         python3 -m pip install wheel
-        python3 -m pip install wheel ansible
+        python3 -m pip install ansible
         deactivate
     else
         message "Virtual environment already exists"
