@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   become: true
-  #connection: local
+  connection: local
   vars:
     r_version: "40"
     r_cran_mirror: "https://mirrors.dotsrc.org/cran/" #AAU CRAN mirror
