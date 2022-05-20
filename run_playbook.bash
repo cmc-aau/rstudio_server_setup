@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
+# This script will install Ansible into a virtual environment as well as required
+# Ansible Galaxy roles, then execute ansible-playbook from the environment.
+#
+# Usage:
+#   bash run_playbook.bash playbook.yml
+# 
+# All arguments/options are passed to the ansible-playbook command.
+# Currently only designed for Debian family Linux distributions.
+# Made by Kasper Skytte Andersen
+# Available at: https://gist.github.com/KasperSkytte/d184d3d163d1e1cfa9b482b2c009a6c0
+
 set -eu
 ansible_venv=${ansible_venv:-"ansible-venv"}
-playbook_file=${playbook_file:-"playbook.yml"}
 requirements_file=${requirements_file:-"roles/requirements.yml"}
 
 message() {
@@ -32,6 +42,11 @@ setup_ansible_venv() {
     else
         message "Virtual environment already exists"
     fi
+
+    echo
+    echo "Activate environment with:"
+    echo "  . ${ansible_venv}/bin/activate"
+    echo
 }
 
 run_playbook() {
@@ -41,9 +56,9 @@ run_playbook() {
         #ansible-galaxy collection install community.general --roles roles
         ansible-galaxy install -r roles/requirements.yml --roles roles/
     fi
-    message "Running Ansible playbook \"${playbook_file}\" from virtual environment"
+    message "Running Ansible playbook from virtual environment"
     . "${ansible_venv}/bin/activate"
-    ansible-playbook "${playbook_file}" "$@"
+    ansible-playbook "$@"
     deactivate
 }
 

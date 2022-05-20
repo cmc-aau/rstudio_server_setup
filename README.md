@@ -3,7 +3,7 @@ This is a simple Ansible Playbook to install and configure R and RStudio server 
 
  - Clone this git repository somewhere with `git clone https://github.com/cmc-aau/rstudio_server_setup.git && cd rstudio_server_setup`
  - Adjust variables as you wish in `playbook.yml`, but especially choose appropriate username(s) with the `rstudio_users` variable. If you only want to use the current user, set it to that to assure that it will be added to the `rstudio_users_group` group that grants access to RStudio Server
- - Run the Ansible playbook with `bash run_playbook.bash`
+ - Run the Ansible playbook with `bash run_playbook.bash playbook.yml --connection=local`
  - Once it's finished access RStudio Server through the browser at `http://ipaddress:8787`
 
 To be able to login first create a password for each user listed under the `rstudio_users` variable, using fx `sudo passwd username`. This folder is not needed anymore, you can safely delete it.
