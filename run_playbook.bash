@@ -2,6 +2,7 @@
 set -eu
 ansible_venv=${ansible_venv:-"ansible-venv"}
 playbook_file=${playbook_file:-"playbook.yml"}
+requirements_file=${requirements_file:-"roles/requirements.yml"}
 
 message() {
     echo " *** $1..."
@@ -34,9 +35,12 @@ setup_ansible_venv() {
 }
 
 run_playbook() {
-    message "Ensuring required Ansible roles are installed"
-    #ansible-galaxy collection install community.general --roles roles
-    ansible-galaxy install -r roles/requirements.yml --roles roles/
+    if [ -s "$requirements_file" ]
+    then
+        message "Ensuring required Ansible roles are installed (from ${requirements_file})"
+        #ansible-galaxy collection install community.general --roles roles
+        ansible-galaxy install -r roles/requirements.yml --roles roles/
+    fi
     message "Running Ansible playbook \"${playbook_file}\" from virtual environment"
     . "${ansible_venv}/bin/activate"
     ansible-playbook "${playbook_file}" "$@"
