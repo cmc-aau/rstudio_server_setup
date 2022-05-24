@@ -50,6 +50,7 @@ setup_ansible_venv() {
 }
 
 run_playbook() {
+    . "${ansible_venv}/bin/activate"
     if [ -s "$requirements_file" ]
     then
         message "Ensuring required Ansible roles are installed (from ${requirements_file})"
@@ -57,7 +58,6 @@ run_playbook() {
         ansible-galaxy install -r roles/requirements.yml --roles roles/
     fi
     message "Running Ansible playbook from virtual environment"
-    . "${ansible_venv}/bin/activate"
     ansible-playbook "$@"
     deactivate
 }
