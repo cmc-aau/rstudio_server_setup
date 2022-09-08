@@ -22,6 +22,12 @@
       - libharfbuzz-dev
       - libfribidi-dev
       - libtiff5-dev
+      - libjpeg-dev
+      - libfreetype6-dev
+      - libpng-dev
+      - zlib1g-dev
+      - libicu-dev
+      - libgit2-d
       - pandoc
   roles:
     - oefenweb.latest_r
