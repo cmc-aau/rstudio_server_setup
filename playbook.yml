@@ -27,7 +27,7 @@
       - libpng-dev
       - zlib1g-dev
       - libicu-dev
-      - libgit2-d
+      - libgit2-dev
       - pandoc
   roles:
     - oefenweb.latest_r
