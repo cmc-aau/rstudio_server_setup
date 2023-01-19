@@ -36,8 +36,9 @@ setup_ansible_venv() {
         python3 -m venv "$ansible_venv"
         . "${ansible_venv}/bin/activate"
         #wheel must be installed first, can't be done in the same command
+        python3 -m pip install --upgrade pip
         python3 -m pip install wheel
-        python3 -m pip install ansible ansible-galaxy
+        python3 -m pip install ansible
         deactivate
     else
         message "Virtual environment already exists"
