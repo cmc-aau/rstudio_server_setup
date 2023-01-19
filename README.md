@@ -6,4 +6,4 @@ This is a simple Ansible Playbook to install and configure R and RStudio server 
  - Run the Ansible playbook with `bash run_playbook.bash playbook.yml --connection=local`
  - Once it's finished access RStudio Server through the browser at `http://ipaddress:8787`
 
-To be able to login first create a password for each user listed under the `rstudio_users` variable, using fx `sudo passwd username`. This folder is not needed anymore, you can safely delete it.
+To be able to login first create a password for each user listed under the `rstudio_users` variable, using fx `sudo passwd username`. This folder is not needed anymore, you can safely delete it. Also ensure port 8787 (ingress) is open or you wont be able to connect. (With openstack go to Network -> Security Groups -> Manage Rules -> Add rule).
